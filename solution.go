@@ -1,5 +1,10 @@
 package main
 
-func solution(x bool) bool {
-	return !x
+type data struct {
+	nums1 []int
+	nums2 []int
+}
+
+func solution(data data) float64 {
+
 }
