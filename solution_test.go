@@ -21,6 +21,26 @@ func Test(t *testing.T) {
 			data: data{[]int{1, 2}, []int{3, 4}},
 			exp:  2.500,
 		},
+		{
+			name: "returns false",
+			data: data{[]int{1, 2, 3}, []int{4, 5}},
+			exp:  3.0,
+		},
+		{
+			name: "returns false",
+			data: data{[]int{1, 2, 4, 5}, []int{3}},
+			exp:  3.000,
+		},
+		{
+			name: "returns when one array empty",
+			data: data{[]int{1, 2, 3}, []int{}},
+			exp:  3.000,
+		},
+		{
+			name: "returns when one array empty",
+			data: data{[]int{}, []int{1, 2, 3, 4}},
+			exp:  3.000,
+		},
 	}
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
