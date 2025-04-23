@@ -10,8 +10,11 @@ type data struct {
 func solution(data data) float64 {
 	a := []int{} // always larger
 	b := []int{}
-	if len(data.nums2) == 0 { // todo implement for no array
-		return float64(data.nums2[mid])
+	if len(data.nums2) == 0 {
+		return getMedianOfArray(data.nums1)
+	}
+	if len(data.nums1) == 0 {
+		return getMedianOfArray(data.nums2)
 	}
 	if data.nums1[0] > data.nums2[0] {
 		a = data.nums2
@@ -23,7 +26,7 @@ func solution(data data) float64 {
 	if a[len(a)-1] < b[0] { // consecutive arrays
 		mid := float64(len(a)+len(b)) / 2.0
 		point := getPointFromConsecutiveArrays(a, b, int(math.Ceil(float64(mid))))
-		if mid/math.Floor(mid) != 1 {
+		if mid != math.Floor(mid) {
 			return point
 		}
 		point2 := getPointFromConsecutiveArrays(a, b, int(math.Round(float64(mid)+1)))
@@ -45,11 +48,12 @@ func getPointFromConsecutiveArrays(a []int, b []int, p int) float64 {
 }
 
 func getMedianOfArray(a []int) float64 {
-	mid := len(a) / 2.0
-	point := math.Ceil(mid)
-	if mid/math.Floor(mid) != 1 {
-		return point
+	mid := float64(len(a)) / 2.0
+	midFloor := math.Floor(mid)
+	point := a[int(midFloor)]
+	if mid != midFloor {
+		return float64(point)
 	}
-	point2 := getPointFromConsecutiveArrays(a, b, int(math.Round(float64(mid)+1)))
-	return (point + point2) / 2.0
+	point2 := a[int(math.Floor(midFloor-1))]
+	return float64(point+point2) / 2.0
 }

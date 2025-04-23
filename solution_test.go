@@ -34,12 +34,12 @@ func Test(t *testing.T) {
 		{
 			name: "returns when one array empty",
 			data: data{[]int{1, 2, 3}, []int{}},
-			exp:  3.000,
+			exp:  2.000,
 		},
 		{
 			name: "returns when one array empty",
 			data: data{[]int{}, []int{1, 2, 3, 4}},
-			exp:  3.000,
+			exp:  2.500,
 		},
 	}
 	for _, tc := range testCases {
