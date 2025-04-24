@@ -36,7 +36,25 @@ func solution(data data) float64 {
 		mid := int(math.Ceil(float64(len(b)) / 2.0))
 		return float64(b[mid-1])
 	}
-	return 0.0
+	mid := float64(len(a)+len(b)) / 2.0 // assume single point median for now
+	if int(mid) < len(a) {
+		midVal := a[int(mid)]
+		if b[0] < midVal {
+			return float64(midVal)
+		}
+	} else {
+		midVal := b[int(mid)-len(a)]
+		if a[len(a)-1] < midVal {
+			return float64(midVal)
+		}
+	}
+
+	//if a[len(a)-1] <= b[len(b)-1] && a[0] <= a[0] {
+	//	am := getMedianOfArray(a)
+	//	bm := getMedianOfArray(b)
+	//
+	//}
+	return -1.0
 }
 
 func getPointFromConsecutiveArrays(a []int, b []int, p int) float64 {
