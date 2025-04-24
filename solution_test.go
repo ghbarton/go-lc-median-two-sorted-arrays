@@ -41,6 +41,16 @@ func Test(t *testing.T) {
 			data: data{[]int{}, []int{1, 2, 3, 4}},
 			exp:  2.500,
 		},
+		{
+			name: "length one array effects median of other",
+			data: data{[]int{3}, []int{1, 2, 8, 8}},
+			exp:  3.000,
+		},
+		{
+			name: "",
+			data: data{[]int{1, 2, 3, 4}, []int{3, 4, 5, 6, 7}},
+			exp:  4.000,
+		},
 	}
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
