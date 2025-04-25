@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -56,6 +57,37 @@ func Test(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			audit := solution(tc.data)
 			assert.Equal(t, tc.exp, audit)
+		})
+	}
+
+	binarySearchTestCases := []struct {
+		name string
+		a    []int
+		x    int
+		exp  int
+		err  error
+	}{
+		{
+			name: "returns err",
+			a:    []int{0, 2, 3, 4, 5},
+			x:    1,
+			exp:  0,
+			err:  fmt.Errorf("%d was not found in %d", 1, []int{0, 2, 3, 4, 5}),
+		},
+		{
+			name: "finds start",
+			a:    []int{1, 2, 3, 4, 5},
+			x:    1,
+			exp:  0,
+			err:  nil,
+		},
+	}
+
+	for _, tc := range binarySearchTestCases {
+		t.Run(tc.name, func(t *testing.T) {
+			audit, auditErr := binarySearch(tc.a, tc.x)
+			assert.Equal(t, tc.exp, audit)
+			assert.Equal(t, tc.err, auditErr)
 		})
 	}
 }

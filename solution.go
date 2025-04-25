@@ -1,6 +1,9 @@
 package main
 
-import "math"
+import (
+	"fmt"
+	"math"
+)
 
 type data struct {
 	nums1 []int
@@ -39,7 +42,7 @@ func solution(data data) float64 {
 	mid := float64(len(a)+len(b)) / 2.0 // assume single point median for now
 	if int(mid) < len(a) {
 		midVal := a[int(mid)]
-		if b[0] < midVal {
+		if midVal < b[0] {
 			return float64(midVal)
 		}
 	} else {
@@ -57,6 +60,14 @@ func solution(data data) float64 {
 	return -1.0
 }
 
+func binarySearch(a []int, x int) (int, error) {
+	l := a[0]
+	r := a[len(a)-1]
+	for l < r {
+		break
+	}
+	return 0, fmt.Errorf("%d was not found in %d", x, a)
+}
 func getPointFromConsecutiveArrays(a []int, b []int, p int) float64 {
 	p = p - 1
 	if len(a) <= p {
