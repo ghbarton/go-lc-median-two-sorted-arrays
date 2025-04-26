@@ -61,12 +61,33 @@ func solution(data data) float64 {
 }
 
 func binarySearch(a []int, x int) (int, error) {
-	l := a[0]
-	r := a[len(a)-1]
-	for l < r {
-		break
+	if len(a) == 0 {
+		return -1, fmt.Errorf("cannot search empty array")
 	}
-	return 0, fmt.Errorf("%d was not found in %d", x, a)
+	if len(a) == 1 {
+		if a[0] == x {
+			return 0, nil
+		}
+		return -1, fmt.Errorf("%d was not found in %d", x, a)
+	}
+	r := len(a) - 1
+	m := r / 2
+	l := 0
+	for l < r {
+		if x < a[m] {
+			r = m
+		} else {
+			l = m
+		}
+		if a[l] == x {
+			return l, nil
+		}
+		if a[r] == x {
+			return r, nil
+		}
+		m = l + (r-l)/2
+	}
+	return -1, fmt.Errorf("%d was not found in %d", x, a)
 }
 func getPointFromConsecutiveArrays(a []int, b []int, p int) float64 {
 	p = p - 1
