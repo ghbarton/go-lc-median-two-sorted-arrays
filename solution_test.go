@@ -59,6 +59,64 @@ func Test(t *testing.T) {
 			assert.Equal(t, tc.exp, audit)
 		})
 	}
+	slotSearchTestCases := []struct {
+		name string
+		a    []int
+		x    int
+		exp  int
+		err  error
+	}{
+		{
+			name: "empty array error",
+			a:    []int{},
+			x:    1,
+			exp:  -1,
+			err:  fmt.Errorf("cannot search empty array"),
+		},
+		{
+			name: "single item array ",
+			a:    []int{5},
+			x:    1,
+			exp:  0,
+			err:  nil,
+		},
+		{
+			name: "returns 1",
+			a:    []int{0, 2, 3, 4, 5},
+			x:    1,
+			exp:  1,
+			err:  nil,
+		},
+		{
+			name: "returns 1",
+			a:    []int{0, 1, 3, 4, 5},
+			x:    1,
+			exp:  1,
+			err:  nil,
+		},
+		{
+			name: "returns 4",
+			a:    []int{0, 1, 3, 4, 5},
+			x:    5,
+			exp:  4,
+			err:  nil,
+		},
+		{
+			name: "returns 5",
+			a:    []int{0, 1, 3, 4, 5},
+			x:    6,
+			exp:  5,
+			err:  nil,
+		},
+	}
+
+	for _, tc := range slotSearchTestCases {
+		t.Run(tc.name, func(t *testing.T) {
+			audit, auditErr := slotSearch(tc.a, tc.x)
+			assert.Equal(t, tc.exp, audit)
+			assert.Equal(t, tc.err, auditErr)
+		})
+	}
 
 	binarySearchTestCases := []struct {
 		name string
@@ -122,6 +180,62 @@ func Test(t *testing.T) {
 			x:    0,
 			exp:  0,
 			err:  nil,
+		},
+		{
+			name: "single element array - match",
+			a:    []int{5},
+			x:    5,
+			exp:  0,
+			err:  nil,
+		},
+		{
+			name: "large sorted array - find first",
+			a:    []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
+			x:    1,
+			exp:  0,
+			err:  nil,
+		},
+		{
+			name: "large sorted array - find last",
+			a:    []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
+			x:    10,
+			exp:  9,
+			err:  nil,
+		},
+		{
+			name: "duplicates - target at beginning",
+			a:    []int{2, 2, 2, 3, 4},
+			x:    2,
+			exp:  2,
+			err:  nil,
+		},
+		{
+			name: "all elements same, target present",
+			a:    []int{7, 7, 7, 7, 7},
+			x:    7,
+			exp:  2,
+			err:  nil,
+		},
+		{
+			name: "all elements same, target missing",
+			a:    []int{7, 7, 7, 7, 7},
+			x:    8,
+			exp:  -1,
+			err:  fmt.Errorf("%d was not found in %d", 8, []int{7, 7, 7, 7, 7}),
+		},
+		{
+			name: "negative numbers - target present",
+			a:    []int{-10, -5, 0, 5, 10},
+			x:    -5,
+			exp:  1,
+			err:  nil,
+		},
+		{
+			name: "negative numbers - target missing",
+			a:    []int{-10, -5, 0, 5, 10},
+			x:    -6,
+			exp:  -1,
+			err:  fmt.Errorf("%d was not found in %d", -6, []int{-10, -5, 0, 5, 10}),
 		},
 	}
 

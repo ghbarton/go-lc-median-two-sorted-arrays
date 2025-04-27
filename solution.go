@@ -60,6 +60,36 @@ func solution(data data) float64 {
 	return -1.0
 }
 
+func slotSearch(a []int, x int) (int, error) {
+	if len(a) == 0 {
+		return -1, fmt.Errorf("cannot search empty array")
+	}
+	if len(a) == 1 {
+		if x <= a[0] {
+			return 0, nil
+		}
+		return 1, nil
+	}
+	r := len(a) - 1
+	m := r / 2
+	l := 0
+	for l+1 != r {
+		if x < a[m] {
+			r = m
+		} else {
+			l = m
+		}
+		m = l + (r-l)/2
+	}
+	if x <= a[l] {
+		return l, nil
+	}
+	if a[r] < x {
+		return r + 1, nil
+	}
+	return r, nil
+}
+
 func binarySearch(a []int, x int) (int, error) {
 	if len(a) == 0 {
 		return -1, fmt.Errorf("cannot search empty array")
@@ -73,7 +103,7 @@ func binarySearch(a []int, x int) (int, error) {
 	r := len(a) - 1
 	m := r / 2
 	l := 0
-	for l < r {
+	for l+1 != r {
 		if x < a[m] {
 			r = m
 		} else {
